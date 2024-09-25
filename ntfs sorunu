@@ -2,4 +2,22 @@ Linux ntfs diskleri otomatik görmüyor maalesef ki ve bunun yöntemini açılla
 
 sudo apt update
 sudo apt install ntfs-3g
-önce bu kodlarla 
+önce bu kodlarla ntfs-3g toolunu güncelleyelim
+
+lsblk
+sonra bu komut ile tüm diskleri görüntüleyip ilgili diskin konumunu bulalım
+bir başka yöntem olarak diski açmaya çalıştığınızda karşınıza çıkan hatadan da diskin konumunu öğrenebilirsiniz
+
+blkid
+sonra bu komut ile ilgili diskin ID numarasını öğrenmemiz gerek:
+/dev/nvme1n1p2: BLOCK_SIZE="512" UUID="025413B65413AB83" TYPE="ntfs" PARTUUID="c3dfb47d-c118-42da-a9ea-671b7dc75d7d"
+gibi bir çıktı olacaktır buna göre disk ID numaramız : 025413B65413AB83 olacaktır
+
+daha sonra home/user/etc/fstab konumuna gidelim ve ilgili dosyanın en alt satırında kendimize yeni satır açalım
+
+UUID=XXXX-XXXX /mnt/ntfs_disk ntfs-3g defaults,uid=1000,gid=1000,dmode=755,fmode=644 0 0
+bu satırı en alta yapıştır ve xxx olan yere disk id numaranı yaz
+
+eğer olmazsa
+sudo mkdir /mnt/ntfs_dis
+çalıştır
